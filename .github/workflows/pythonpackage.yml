@@ -26,18 +26,13 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-
-    - name: temp
+    - name: setup package
       run: |
-        python -c "print('aaaaaaaaaaa')"
+        python setup.py install
 
     - name: Testing
       run: |
         python setup.py test
-
-    - name: setup package
-      run: |
-        python setup.py install
 
     - name: Lint with flake8
       run: |
