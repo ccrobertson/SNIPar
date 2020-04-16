@@ -186,6 +186,12 @@ def create_pedigree(king_address, agesex_address):
     data = [(p.fid, p.id, p.pid, p.mid) for p in people.values()]
     data = pd.DataFrame(data, columns = ['FID' , 'IID', 'FATHER_ID' , 'MOTHER_ID']).astype(str)
     return data
+
+def add_sid_to_pedigree(ped):
+    """Change FID to sibship ID
+    """
+    ped["FID"] = ped.groupby(["FATHER_ID", "MOTHER_ID"]).grouper.group_info[0]
+    return ped
     
 def add_control(pedigree):
     """Adds control families to the pedigree table for testing.

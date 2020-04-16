@@ -104,6 +104,8 @@ if __name__ == "__main__":
         pedigree = pd.read_csv(args.pedigree, sep = " ")
     logging.info("pedigree loaded.")
 
+    pedigree = add_sid_to_pedigree(pedigree)
+
     if args.c:
         logging.info("Adding control to the pedigree ...")
         pedigree = add_control(pedigree)
