@@ -1,6 +1,7 @@
 from sibreg.sibreg import *
 import argparse, code
 from pysnptools.snpreader import Pheno
+import numpy as np
 
 ######### Command line arguments #########
 if __name__ == '__main__':
@@ -121,7 +122,7 @@ if __name__ == '__main__':
         alpha_bpg_out[:, 0] = alpha_bpg[0][1:4]
         alpha_bpg_out[:, 1] = np.sqrt(np.diag(alpha_bpg[1])[1:4])
         np.savetxt(args.outprefix + '.bpg.pgs_effects.txt',
-                   np.hstack((outcols, np.array(alpha_bpg_out, dtype='S20'))),
+                   np.hstack((outcols, np.array(alpha_bpg_out, dtype='S22'))),
                    delimiter='\t', fmt='%s')
         np.savetxt(args.outprefix + '.bpg.pgs_vcov.txt', alpha_bpg[1][1:4, 1:4])
 
@@ -154,5 +155,5 @@ if __name__ == '__main__':
         alpha_sdiff_out[:, 0] = alpha_sdiff[0][1:3]
         alpha_sdiff_out[:, 1] = np.sqrt(np.diag(alpha_sdiff[1])[1:3])
         np.savetxt(args.outprefix + '.sibdiff.pgs_effects.txt',
-                   np.hstack((np.array(['direct', 'between-family']).reshape((2,1)), np.array(alpha_sdiff_out, dtype='S20'))),
+                   np.hstack((np.array(['direct', 'between-family']).reshape((2,1)), np.array(alpha_sdiff_out, dtype='S22'))),
                    delimiter='\t', fmt='%s')

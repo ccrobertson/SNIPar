@@ -89,6 +89,7 @@ def make_gts_matrix(gts,imp_gts,par_status,gt_indices,mean_normalise = True):
             G[i, 2, :] = imp_gts[gt_indices[i, 2], :]
         else:
             ValueError('Maternal genotype neither imputed nor observed')
+    G = ma.array(G,mask=np.isnan(G))
     if mean_normalise:
         for i in range(3):
             G[:,i,:] = G[:,i,:] - ma.mean(G[:,i,:],axis=0)
@@ -218,7 +219,7 @@ if __name__ == '__main__':
     freqs_pass = np.logical_and(freqs > args.min_maf,freqs < (1-args.min_maf))
     print(str(freqs.shape[0]-np.sum(freqs_pass))+' SNPs with MAF<'+str(args.min_maf))
     missingness_pass = 100*missingness < args.max_missing
-    print(str(freqs.shape[0] - np.sum(freqs_pass)) + ' SNPs with missingness >' + str(args.max_missing)+'%')
+    print(str(freqs.shape[0] - np.sum(missingness_pass)) + ' SNPs with missingness >' + str(args.max_missing)+'%')
     filter_pass = np.logical_and(freqs_pass,missingness_pass)
     gts = gts[:,filter_pass]
     imp_gts = imp_gts[:,filter_pass]
